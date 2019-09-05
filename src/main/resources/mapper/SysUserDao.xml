@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.security.dao.SysUserDao">
+
+    <resultMap type="com.spring.security.entity.SysUser" id="SysUserMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="account" column="account" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
+        <result property="enabled" column="enabled" jdbcType="BOOLEAN"/>
+        <result property="accountNonExpired" column="account_non_expired" jdbcType="BOOLEAN"/>
+        <result property="accountNonLocked" column="account_non_locked" jdbcType="BOOLEAN"/>
+        <result property="credentialsNonExpired" column="credentials_non_expired" jdbcType="BOOLEAN"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createUser" column="create_user" jdbcType="INTEGER"/>
+        <result property="updateUser" column="update_user" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SysUserMap">
+        select
+          id, account, user_name, password, last_login_time, enabled, account_non_expired, account_non_locked, credentials_non_expired, create_time, update_time, create_user, update_user
+        from sys_user
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SysUserMap">
+        select
+          id, account, user_name, password, last_login_time, enabled, account_non_expired, account_non_locked, credentials_non_expired, create_time, update_time, create_user, update_user
+        from sys_user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SysUserMap">
+        select
+          id, account, user_name, password, last_login_time, enabled, account_non_expired, account_non_locked, credentials_non_expired, create_time, update_time, create_user, update_user
+        from sys_user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="account != null and account != ''">
+                and account = #{account}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="lastLoginTime != null">
+                and last_login_time = #{lastLoginTime}
+            </if>
+            <if test="enabled != null">
+                and enabled = #{enabled}
+            </if>
+            <if test="accountNonExpired != null">
+                and account_non_expired = #{accountNonExpired}
+            </if>
+            <if test="accountNonLocked != null">
+                and account_non_locked = #{accountNonLocked}
+            </if>
+            <if test="credentialsNonExpired != null">
+                and credentials_non_expired = #{credentialsNonExpired}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="createUser != null">
+                and create_user = #{createUser}
+            </if>
+            <if test="updateUser != null">
+                and update_user = #{updateUser}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into sys_user(account, user_name, password, last_login_time, enabled, account_non_expired, account_non_locked, credentials_non_expired, create_time, update_time, create_user, update_user)
+        values (#{account}, #{userName}, #{password}, #{lastLoginTime}, #{enabled}, #{accountNonExpired}, #{accountNonLocked}, #{credentialsNonExpired}, #{createTime}, #{updateTime}, #{createUser}, #{updateUser})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update sys_user
+        <set>
+            <if test="account != null and account != ''">
+                account = #{account},
+            </if>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime},
+            </if>
+            <if test="enabled != null">
+                enabled = #{enabled},
+            </if>
+            <if test="accountNonExpired != null">
+                account_non_expired = #{accountNonExpired},
+            </if>
+            <if test="accountNonLocked != null">
+                account_non_locked = #{accountNonLocked},
+            </if>
+            <if test="credentialsNonExpired != null">
+                credentials_non_expired = #{credentialsNonExpired},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from sys_user where id = #{id}
+    </delete>
+
+    <!--根据用户名查询用户-->
+    <select id="selectByName" resultMap="SysUserMap">
+        select * from sys_user where account = #{userName};
+    </select>
+</mapper>

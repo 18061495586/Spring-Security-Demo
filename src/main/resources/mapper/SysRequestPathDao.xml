@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.security.dao.SysRequestPathDao">
+
+    <resultMap type="com.spring.security.entity.SysRequestPath" id="SysRequestPathMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SysRequestPathMap">
+        select
+          id, url, description
+        from sys_request_path
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SysRequestPathMap">
+        select
+          id, url, description
+        from sys_request_path
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SysRequestPathMap">
+        select
+          id, url, description
+        from sys_request_path
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="url != null and url != ''">
+                and url = #{url}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into sys_request_path(url, description)
+        values (#{url}, #{description})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update sys_request_path
+        <set>
+            <if test="url != null and url != ''">
+                url = #{url},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from sys_request_path where id = #{id}
+    </delete>
+
+</mapper>

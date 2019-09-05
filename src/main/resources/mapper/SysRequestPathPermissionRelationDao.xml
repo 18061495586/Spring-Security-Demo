@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.security.dao.SysRequestPathPermissionRelationDao">
+
+    <resultMap type="com.spring.security.entity.SysRequestPathPermissionRelation" id="SysRequestPathPermissionRelationMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="urlId" column="url_id" jdbcType="INTEGER"/>
+        <result property="permissionId" column="permission_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SysRequestPathPermissionRelationMap">
+        select
+          id, url_id, permission_id
+        from sys_request_path_permission_relation
+        where  = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SysRequestPathPermissionRelationMap">
+        select
+          id, url_id, permission_id
+        from sys_request_path_permission_relation
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SysRequestPathPermissionRelationMap">
+        select
+          id, url_id, permission_id
+        from sys_request_path_permission_relation
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="urlId != null">
+                and url_id = #{urlId}
+            </if>
+            <if test="permissionId != null">
+                and permission_id = #{permissionId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into sys_request_path_permission_relation(id, url_id, permission_id)
+        values (#{id}, #{urlId}, #{permissionId})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update sys_request_path_permission_relation
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="urlId != null">
+                url_id = #{urlId},
+            </if>
+            <if test="permissionId != null">
+                permission_id = #{permissionId},
+            </if>
+        </set>
+        where  = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from sys_request_path_permission_relation where  = #{id}
+    </delete>
+
+</mapper>
